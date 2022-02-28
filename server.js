@@ -45,6 +45,7 @@ app.get('/', function (req, res) {
     res.status(200).json({ "message": "server is up and running" });
 })
 
+// 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
 
 // Error Handling
 app.use(handle404);
