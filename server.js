@@ -9,6 +9,7 @@ import { default as DBG } from "debug";
 
 import __dirname from "./approotdir.js";
 import {basicErrorHandler, handle404, normalizePort, onError, onListening} from "./utils/utils";
+import apiRoutes from "./routes/api.js";
 
 
 // Global variables
@@ -36,6 +37,9 @@ app.use(logger(process.env.REQUEST_LOG_FORMAT || 'common', {
         })
         : process.stdout
 }));
+
+// API ROUTES
+app.use('/api/v1', apiRoutes)
 
 app.get('/', function (req, res) {
     res.status(200).json({ "message": "server is up and running" });
