@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang>
+    <head>
+            <title>Email Notification</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </head>
+
+    <body class="container" style="background:#f9f9f9">
+      	<div class="row">
+    	    <div class="col-md-6 col-md-offset-3">
+    		    <h1>Send Email</h1>
+    		    <hr />
+    		    <form action="/api/send" method="post">
+    		    	<input type="text" class="form-control" name="recipients" placeholder="Recipients" /><br />
+    		    	<input type="text" class="form-control" name="subject" placeholder="Subject" /><br />
+    		    	<textarea class="form-control" name="content" placeholder="Content"></textarea><br />
+    		    	<button class="btn btn-info" type="submit">Send</button>
+    		    </form>
+
+    	    </div>
+
+      	</div>
+      </body>
+</html>

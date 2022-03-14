@@ -9,7 +9,9 @@ import { default as DBG } from "debug";
 
 import __dirname from "./approotdir.js";
 import {basicErrorHandler, handle404, normalizePort, onError, onListening} from "./utils/utils";
-import apiRoutes from "./routes/api.js";
+
+import api from "./routes/api.js";
+import routes from "./routes/index.js";
 
 
 // Global variables
@@ -23,10 +25,15 @@ export const app = express();
 export const port = normalizePort(process.env.PORT || '3000')
 app.set('port', port);
 
+// view engine setup
+app.set("views", path.join(__dirname, "views"))
+app.set("view engine", "hjs")
+
 // Middlewares
 app.use(cors())
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: false }))
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(logger(process.env.REQUEST_LOG_FORMAT || 'common', {
     stream: process.env.REQUEST_LOG_FILE  || 'log.txt' ?
         createStream(process.env.REQUEST_LOG_FILE || 'log.txt', {
@@ -39,7 +46,8 @@ app.use(logger(process.env.REQUEST_LOG_FORMAT || 'common', {
 }));
 
 // API ROUTES
-app.use('/api/v1', apiRoutes)
+app.use('/', routes)
+app.use('/api', api)
 
 app.get('/', function (req, res) {
     res.status(200).json({ "message": "server is up and running" });

@@ -1,4 +1,4 @@
-import { port, server } from '../server.js';
+import { port, server, app } from '../server.js';
 import { default as DBG } from 'debug';
 
 const debug = DBG('server:debug');
@@ -51,15 +51,21 @@ export function onListening() {
     debug(`Listening on ${bind}`);
 }
 
-export function handle404(req, res) {
-    res.status(404).json({ error: 'Not found' });
+export function handle404(req, res, next) {
+    let err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 }
 
 export function basicErrorHandler(err, req, res, next) {
-    console.error("Error", err);
-    res.status(500).json({
-        status: 500,
-        message: err.message,
-        body:{}
-    });
+    app.get('env') === 'development' ?
+        res.status(err.status || 500).render('error', {
+            message: err.message,
+            error: err
+        }) :
+
+        res.status(err.status || 500).render('error', {
+            message: err.message,
+            error: {}
+        })
 }
